@@ -9,7 +9,7 @@
 
 ---
 
-## 🔬 Pipeline Overview
+## Pipeline Overview
 
 This workflow performs:
 
@@ -27,6 +27,25 @@ This workflow performs:
 12. **Curated result generation**
 
 ---
+
+## 📥 Input Requirements
+
+### Raw reads
+- Location: `01_Data/01_Raw_Reads/`
+- Naming: `*_1.fastq.gz` and `*_2.fastq.gz`
+
+### Reference genome
+- Location: `01_Data/02_Ref_genome/`
+- Must contain:
+  - `hg38.fa`
+  - `.fai` index
+  - `.dict` sequence dictionary
+  - dbSNP VCF
+
+### Funcotator data
+- Location: `01_Data/03_Funcotator/`
+- Download from:
+  https://gatk.broadinstitute.org/hc/en-us/articles/360037224432-Funcotator
 
 ## 📂 Directory Structure
 
@@ -58,39 +77,17 @@ variant_calling_nf/
 
 ---
 
-## 📥 Input Requirements
-
-### Raw reads
-- Location: `01_Data/01_Raw_Reads/`
-- Naming: `*_1.fastq.gz` and `*_2.fastq.gz`
-
-### Reference genome
-- Location: `01_Data/02_Ref_genome/`
-- Must contain:
-  - `hg38.fa`
-  - `.fai` index
-  - `.dict` sequence dictionary
-  - dbSNP VCF
-
-### Funcotator data
-- Location: `01_Data/03_Funcotator/`
-- Download from:
-  https://gatk.broadinstitute.org/hc/en-us/articles/360037224432-Funcotator
-
 ## 🛠 Installation
 
 Run:
 ```bash
 chmod a+x *.sh
-- ./01_docker.sh : This script will install Docker.
-- ./02_get_demo_data.sh: This script will download one sample of WGS data from 10000 genome project.
-- ./03_prepare_reference.sh: This script will download, index the human reference genonme hg38.fa, creates sequence dictionary and download  known sites (dbSNP).
-- ./04_ref_bwa_index.sh: This script will use BWA to index reference genome.
-- ./05_Install_JAVA_and_NF.sh: This script will install JAVA and nextflow.
-- ./06_Curated_Results.sh: This script will convert the resutls into table form which is easy to use.
-
-- varint_calling.nf: This is main nextflow file for variant calling
-- nextflow.config: This file contains the nextflow config description.
+./01_docker.sh # This script will install Docker.
+./02_get_demo_data.sh # This script will download one sample of WGS data from 10000 genome project.
+./03_prepare_reference.sh # This script will download, index the human reference genonme hg38.fa, creates sequence dictionary and download  known sites (dbSNP).
+./04_ref_bwa_index.sh # This script will use BWA to index reference genome.
+./05_Install_JAVA_and_NF.sh # This script will install JAVA and nextflow.
+./06_Curated_Results.sh # This script will convert the results into table form which is easy to use.
 ```
 
 ## Run the workflow:
