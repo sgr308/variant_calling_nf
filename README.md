@@ -79,26 +79,44 @@ variant_calling_nf/
 
 ## 🛠 Installation
 
-Run:
+To install nad run the nextflow pipeline, follow these steps:
+
+1. Clone this repository:
+
+```bash
+git clone https://github.com/sgr308/variant_calling_nf.git
+```
+
+2. Navigate to the pipeline directory:
+
+```bash
+cd variant_calling_nf
+```
+
+3. First make all bash scripts executable:
 ```bash
 chmod a+x *.sh
+```
+
+4. Run all bash scripts one by one:
+```bash
 ./01_docker.sh # This script will install Docker.
 ./02_get_demo_data.sh # This script will download one sample of WGS data from 10000 genome project.
 ./03_prepare_reference.sh # This script will download, index the human reference genonme hg38.fa, creates sequence dictionary and download  known sites (dbSNP).
 ./04_ref_bwa_index.sh # This script will use BWA to index reference genome.
 ./05_Install_JAVA_and_NF.sh # This script will install JAVA and nextflow.
-./06_Curated_Results.sh # This script will convert the results into table form which is easy to use.
 ```
 
-## Run the workflow:
+## Usage
+Run the nextflow workflow:
 ```bash
 nextflow run variant_calling.nf -profile docker -with-dag workflow.html
 ```
 
 ## Run Curated Results bash script:
-once the nextflow pipeline finishes run the following scripts to get final results:
+once the nextflow pipeline finishes, run the following script :
 ```bash
-./06_Curated_Results.sh
+./06_Curated_Results.sh # run this script to get final results
 ```
 
 ## Workflow:
