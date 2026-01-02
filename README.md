@@ -54,23 +54,120 @@ This workflow performs:
 
 ```text
 variant_calling_nf/
-├── 01_Data/
-│   ├── 01_Raw_Reads/          # Raw FASTQ files
-│   ├── 02_Ref_genome/         # Reference genome + indexes + known sites
-│   │   ├── hg38.fa
-│   │   ├── hg38.fa.fai
+├── 01_Data
+│   ├── 01_Raw_Reads
+│   │   ├── SRR062634_1.fastq.gz
+│   │   ├── SRR062634_2.fastq.gz
+│   │   ├── SRR062644_1.fastq.gz
+│   │   └── SRR062644_2.fastq.gz
+│   ├── 02_Ref_genome
+│   │   ├── Homo_sapiens_assembly38.dbsnp138.vcf
+│   │   ├── Homo_sapiens_assembly38.dbsnp138.vcf.idx
 │   │   ├── hg38.dict
-│   │   └── dbsnp.vcf
-│   └── 03_Funcotator/         # Funcotator reference data
-├── 02_Results/                # Output results (FastQC → Curated tables)
+│   │   ├── hg38.fa
+│   │   ├── hg38.fa.amb
+│   │   ├── hg38.fa.ann
+│   │   ├── hg38.fa.bwt
+│   │   ├── hg38.fa.fai
+│   │   ├── hg38.fa.pac
+│   │   └── hg38.fa.sa
+│   └── 03_Funcotator
+│      └── funcotator_dataSources.v1.8.hg38.20230908g
 ├── 01_docker.sh
+├── 02_Results
+│   ├── 01_Reads_QC
+│   │   ├── 01_Raw_fastqc
+│   │   │   ├── SRR062634_1_fastqc.html
+│   │   │   ├── SRR062634_1_fastqc.zip
+│   │   │   ├── SRR062634_2_fastqc.html
+│   │   │   ├── SRR062634_2_fastqc.zip
+│   │   │   ├── SRR062644_1_fastqc.html
+│   │   │   ├── SRR062644_1_fastqc.zip
+│   │   │   ├── SRR062644_2_fastqc.html
+│   │   │   └── SRR062644_2_fastqc.zip
+│   │   ├── 02_MultiQC_Raw_reads
+│   │   │   └── multiqc_raw_reads_report.html
+│   │   ├── 03_Trimmed_fastqc
+│   │   │   ├── SRR062634_trimmed_1_fastqc.html
+│   │   │   ├── SRR062634_trimmed_1_fastqc.zip
+│   │   │   ├── SRR062634_trimmed_2_fastqc.html
+│   │   │   ├── SRR062634_trimmed_2_fastqc.zip
+│   │   │   ├── SRR062644_trimmed_1_fastqc.html
+│   │   │   ├── SRR062644_trimmed_1_fastqc.zip
+│   │   │   ├── SRR062644_trimmed_2_fastqc.html
+│   │   │   └── SRR062644_trimmed_2_fastqc.zip
+│   │   └── 04_MultiQC_Trimmed_reads
+│   │       └── multiqc_trimmed_reads_report.html
+│   ├── 02_Trimmed_reads
+│   │   ├── SRR062634_trimmed_1.fastq.gz
+│   │   ├── SRR062634_trimmed_2.fastq.gz
+│   │   ├── SRR062644_trimmed_1.fastq.gz
+│   │   └── SRR062644_trimmed_2.fastq.gz
+│   ├── 03_Alignment
+│   │   ├── 01_BWA_MEM
+│   │   │   ├── SRR062634.bam
+│   │   │   └── SRR062644.bam
+│   │   ├── 02_Sorted
+│   │   │   ├── SRR062634.sorted.bam
+│   │   │   └── SRR062644.sorted.bam
+│   │   ├── 03_Mark_Dup
+│   │   │   ├── SRR062634.md.bam
+│   │   │   ├── SRR062634.metrics.txt
+│   │   │   ├── SRR062644.md.bam
+│   │   │   └── SRR062644.metrics.txt
+│   │   └── 04_BQSR
+│   │       ├── SRR062634.bqsr.bai
+│   │       ├── SRR062634.bqsr.bam
+│   │       ├── SRR062644.bqsr.bai
+│   │       ├── SRR062644.bqsr.bam
+│   │       └── recal.table
+│   └── 04_Variants
+│       ├── 01_Raw
+│       │   ├── SRR062634_raw.vcf
+│       │   └── SRR062644_raw.vcf
+│       ├── 02_Split
+│       │   ├── SRR062634_raw_indels.vcf
+│       │   ├── SRR062634_raw_snps.vcf
+│       │   ├── SRR062644_raw_indels.vcf
+│       │   └── SRR062644_raw_snps.vcf
+│       ├── 03_Filtered
+│       │   ├── SRR062634_filtered_indels.vcf
+│       │   ├── SRR062634_filtered_snps.vcf
+│       │   ├── SRR062644_filtered_indels.vcf
+│       │   └── SRR062644_filtered_snps.vcf
+│       ├── 04_Pass
+│       │   ├── SRR062634_indels_pass.vcf
+│       │   ├── SRR062634_snps_pass.vcf
+│       │   ├── SRR062644_indels_pass.vcf
+│       │   └── SRR062644_snps_pass.vcf
+│       ├── 05_GT_Filtered
+│       │   ├── SRR062634_indels_gt_clean.vcf
+│       │   ├── SRR062634_snps_gt_clean.vcf
+│       │   ├── SRR062644_indels_gt_clean.vcf
+│       │   └── SRR062644_snps_gt_clean.vcf
+│       ├── 06_Funcotator
+│       │   ├── SRR062634_indels_funcotated.vcf
+│       │   ├── SRR062634_snps_funcotated.vcf
+│       │   ├── SRR062644_indels_funcotated.vcf
+│       │   └── SRR062644_snps_funcotated.vcf
+│       ├── 07_Tables
+│       │   ├── SRR062634_indels.table
+│       │   ├── SRR062634_snps.table
+│       │   ├── SRR062644_indels.table
+│       │   └── SRR062644_snps.table
+│       └── 08_Curated_Results
+│           ├── SRR062634_curated_indels.txt
+│           ├── SRR062634_curated_snps.txt
+│           ├── SRR062644_curated_indels.txt
+│           └── SRR062644_curated_snps.txt
 ├── 02_get_demo_data.sh
 ├── 03_prepare_reference.sh
 ├── 04_ref_bwa_index.sh
 ├── 05_Install_JAVA_and_NF.sh
 ├── 06_Curated_Results.sh
-├── variant_calling.nf         # Main Nextflow workflow
-├── nextflow.config            # Nextflow configuration
+├── nextflow.config
+├── variant_calling.nf
+├── workflow.html
 └── README.md
 ```
 </details>
